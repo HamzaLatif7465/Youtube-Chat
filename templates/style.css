@@ -1,0 +1,249 @@
+body {
+    font-family: 'Roboto', sans-serif; /* A common YouTube-like font */
+    margin: 0;
+    background-color: #f9f9f9; /* Light grey background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.chrome-extension-btn {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chrome-extension-btn:hover {
+    background-color: #0056b3;
+}
+
+.container {
+    display: flex;
+    width: 90%; /* Adjust as needed */
+    max-width: 1400px; /* Max width for content */
+    margin-top: 20px; /* Space from header */
+    gap: 25px; /* Space between main content and sidebar */
+}
+
+.main-content {
+    flex: 2; /* Takes more space than sidebar */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.video-placeholder {
+    width: 100%;
+    /* Aspect ratio for 16:9 videos */
+    padding-bottom: 56.25%; /* 9/16 * 100% */
+    position: relative;
+    background-color: black; /* Placeholder background */
+    margin-bottom: 20px;
+}
+
+.video-placeholder iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.video-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #030303;
+}
+
+.channel-info {
+    font-size: 16px;
+    color: #606060;
+    margin-bottom: 10px;
+}
+
+.video-stats {
+    font-size: 14px;
+    color: #606060;
+    margin-bottom: 10px;
+}
+
+.video-hashtags a {
+    color: #065fd4; /* YouTube blue */
+    text-decoration: none;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.video-hashtags a:hover {
+    text-decoration: underline;
+}
+
+.video-description {
+    font-size: 14px;
+    color: #303030;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+.show-more-btn {
+    background: none;
+    border: none;
+    color: #606060;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 0;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.show-more-btn:hover {
+    color: #030303;
+}
+
+.sidebar {
+    flex: 1; /* Takes less space */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 400px; /* Limit sidebar width */
+    min-width: 300px; /* Ensure sidebar has a minimum width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.chattube-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.chattube-header h3 {
+    margin: 0;
+    color: #303030;
+}
+
+.chattube-icons i {
+    color: #606060;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.chattube-content {
+    font-size: 14px;
+    color: #303030;
+}
+
+.chattube-video-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #030303;
+}
+
+.chattube-description {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.chattube-prompt {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.chattube-sub-prompt {
+    font-style: italic;
+    color: #909090;
+    margin-bottom: 10px;
+}
+
+.suggested-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.suggested-questions button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #303030;
+}
+
+.suggested-questions button:hover {
+    background-color: #e0e0e0;
+}
+
+.chattube-messages-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 12px;
+    color: #606060;
+    margin-bottom: 15px;
+}
+
+.chattube-messages-info i {
+    margin-right: 8px;
+    color: #909090;
+}
+
+.question-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 8px 15px;
+    background-color: #f9f9f9;
+}
+
+.question-input-container input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.question-input-container i {
+    color: #606060;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+    }
+    .sidebar {
+        max-width: unset; /* Remove max-width on smaller screens */
+        min-width: unset;
+    }
+}

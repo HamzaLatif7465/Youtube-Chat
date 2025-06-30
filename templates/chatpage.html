@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Page Clone</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            /* A common YouTube-like font */
+            margin: 0;
+            background-color: #f9f9f9;
+            /* Light grey background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-header {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+
+        .chrome-extension-btn {
+            background-color: #007bff;
+            /* Blue button */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chrome-extension-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            /* Adjust as needed */
+            max-width: 1400px;
+            /* Max width for content */
+            margin-top: 20px;
+            /* Space from header */
+            gap: 25px;
+            /* Space between main content and sidebar */
+        }
+
+        .main-content {
+            flex: 2;
+            /* Takes more space than sidebar */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            /* Aspect ratio for 16:9 videos */
+            padding-bottom: 56.25%;
+            /* 9/16 * 100% */
+            position: relative;
+            background-color: black;
+            /* Placeholder background */
+            margin-bottom: 20px;
+        }
+
+        .video-placeholder iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .video-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #030303;
+        }
+
+        .channel-info {
+            font-size: 16px;
+            color: #606060;
+            margin-bottom: 10px;
+        }
+
+        .video-stats {
+            font-size: 14px;
+            color: #606060;
+            margin-bottom: 10px;
+        }
+
+        .video-hashtags a {
+            color: #065fd4;
+            /* YouTube blue */
+            text-decoration: none;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .video-hashtags a:hover {
+            text-decoration: underline;
+        }
+
+        .video-description {
+            font-size: 14px;
+            color: #303030;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        .show-more-btn {
+            background: none;
+            border: none;
+            color: #606060;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 0;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .show-more-btn:hover {
+            color: #030303;
+        }
+
+        .sidebar {
+            flex: 1;
+            /* Takes less space */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            /* Limit sidebar width */
+            min-width: 300px;
+            /* Ensure sidebar has a minimum width */
+            box-sizing: border-box;
+            /* Include padding in width */
+        }
+
+        .chattube-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .chattube-header h3 {
+            margin: 0;
+            color: #303030;
+        }
+
+        .chattube-icons i {
+            color: #606060;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .chattube-content {
+            font-size: 14px;
+            color: #303030;
+        }
+
+        .chattube-video-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #030303;
+        }
+
+        .chattube-description {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .chattube-prompt {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .chattube-sub-prompt {
+            font-style: italic;
+            color: #909090;
+            margin-bottom: 10px;
+        }
+
+        .suggested-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .suggested-questions button {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 13px;
+            color: #303030;
+        }
+
+        .suggested-questions button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .chattube-messages-info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: 12px;
+            color: #606060;
+            margin-bottom: 15px;
+        }
+
+        .chattube-messages-info i {
+            margin-right: 8px;
+            color: #909090;
+        }
+
+        .question-input-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 8px 15px;
+            background-color: #f9f9f9;
+        }
+
+        .question-input-container input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        .question-input-container i {
+            color: #606060;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            .sidebar {
+                max-width: unset;
+                /* Remove max-width on smaller screens */
+                min-width: unset;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+            background-color: #f0f0f0;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        iframe {
+            margin-top: 30px;
+            width: 80%;
+            height: 450px;
+            border: none;
+        }
+
+        .chat-bubble {
+    max-width: 80%;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 15px;
+    clear: both;
+}
+
+
+        .chat-user {
+    background-color: #DCF8C6;
+    float: right;
+    text-align: right;
+}
+
+.chat-bot {
+    background-color: #F1F0F0;
+    float: left;
+    text-align: left;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <main class="main-content">
+            <section class="video-player-section">
+                <!-- <h2>Enter YouTube Video URL {{url}}</h2> -->
+                <!-- <p>Paste the YouTube video URL below to load the video.</p> -->
+                 <!-- input url is "https://www.youtube.com/watch?v=ZEF2PzDvdt8" -->
+
+                <input type="text" id="videoUrl" hidden placeholder="https://www.youtube.com/watch?v=VIDEO_ID" value={{url}}>
+                <!-- <button onclick="loadVideo()">Load Video</button> -->
+
+                <div id="videoContainer"></div>
+
+
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <div class="chattube-header">
+                <h3>ChatTube</h3>
+                <div class="chattube-icons">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+            </div>
+
+            <div class="chattube-content">
+    <div id="chatMessages" style="max-height: 400px; overflow-y: auto; padding-bottom: 10px;"></div>
+
+    <form id="chatForm">
+        <div class="question-input-container">
+            <input type="text" id="questionInput" placeholder="Write a question..." required>
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+        </aside>
+    </div>
+
+    <script>
+        window.onload = loadVideo;
+
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\&\?\/]+)/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        function loadVideo() {
+            const url = document.getElementById("videoUrl").value;
+            const videoId = extractVideoId(url);
+
+            if (videoId) {
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                document.getElementById("videoContainer").innerHTML =
+                    `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+            } else {
+                alert("Invalid YouTube URL");
+            }
+        }
+
+        document.getElementById("chatForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const input = document.getElementById("questionInput");
+    const userQuestion = input.value.trim();
+    if (!userQuestion) return;
+
+    const chatMessages = document.getElementById("chatMessages");
+
+    // Add user message to chat
+    const userDiv = document.createElement("div");
+    userDiv.className = "chat-bubble chat-user";
+    userDiv.textContent = userQuestion;
+    chatMessages.appendChild(userDiv);
+
+    input.value = "";
+
+    // Send question to server
+    const formData = new FormData();
+    formData.append("question", userQuestion);
+
+    const response = await fetch("/chatpage", {
+        method: "POST",
+        body: formData
+    });
+
+    const resultHtml = await response.text();
+
+    // Add bot response to chat
+    const botDiv = document.createElement("div");
+    botDiv.className = "chat-bubble chat-bot";
+    botDiv.innerHTML = resultHtml;
+    chatMessages.appendChild(botDiv);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+    </script>
+
+</body>
+
+</html>
