@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy.orm import Session
-
 from database import SessionLocal, Base, engine
 from models import User
 import trans1 as tn  # assuming this handles YouTube and LLM logic
@@ -157,3 +156,4 @@ async def post_update(
         db.commit()
 
     return RedirectResponse("/", status_code=302)
+

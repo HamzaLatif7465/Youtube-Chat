@@ -26,7 +26,7 @@ prompt = PromptTemplate(
 llm = ChatGoogleGenerativeAI(
     model = "gemini-1.5-flash",
     # api_key="AIzaSyA-x959UXNkvlcjTbVPfiwWSjzngSwT7Zo"
-    api_key="AIzaSyBTBK2r8Bdaeg_BwvqzolrLc2tXVHptD5s"
+    api_key="AIzaSyAOeO4C6vqs9lnkBbuc--tBl_A72QN3zIg"
     )
 
 def embed():
@@ -41,15 +41,23 @@ if i == 1:
 else:
     print("embeddings already created")
 
+from youtube_transcript_api import YouTubeTranscriptApi
+ytt_api = YouTubeTranscriptApi()
+
 def get_video_embed(video_id):
+
     video_id = video_id # only the ID, not full URL
     try:
         print(f"Fetching transcript for video ID: {video_id}")
     # If you don’t care which language, this returns the “best” one
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=["en","hi"])
+        transcript_list = ytt_api.fetch(video_id,languages=["en","hi"])
     # Flatten it to plain text
-        transcript = " ".join(chunk["text"] for chunk in transcript_list)
-    
+        print(1)
+        transcript = " ".join(chunk.text for chunk in transcript_list.snippets)
+        print(2)
+        print(transcript)
+
+
     except Exception as e:
         transcript = default_tran
         print("No captions available for this video.")
@@ -70,10 +78,3 @@ def llm_call(question,retriever):
     answer = llm.invoke(final_prompt)
     return answer.content
 
-# question   = "is the topic of nuclear fusion discussed in this video? if yes then what was discussed"
-# question = input("Enter your question: ")
-# id = input("Enter the video ID: ")  # e.g., "Gfr50f6ZBvo"
-# question = "Sumarize it"
-# id = "ZEF2PzDvdt8"
-# # llm_call(question,retriever=get_video_embed("Gfr50f6ZBvo")) # only the ID, not full URL
-# llm_call(question,retriever=get_video_embed(id)) # only the ID, not full URL
